@@ -519,48 +519,57 @@
     function logout() { currentAuthToken = ""; hideAll(); document.getElementById('unlockCode').value = ""; document.getElementById('registrationSection').classList.add('active-section'); document.getElementById('logoutBar').style.display = 'none'; fetchStatus(); }
 
     // 5. Secure Authentication against Render Environment Variable
-    async function verifyUnlockCode() {
-        const code = document.getElementById('unlockCode').value.trim();
-        const errorMsg = document.getElementById('loginError');
-        errorMsg.style.display = 'none';
-        document.querySelector('#loginSection .btn-submit').innerText = "Authenticating...";
+   async function verifyUnlockCode() {
+    const code = document.getElementById('unlockCode').value.trim();
+    const errorMsg = document.getElementById('loginError');
+    errorMsg.style.display = 'none';
+    document.querySelector('#loginSection .btn-submit').innerText = "Authenticating...";
 
-        try {
-            const res = await fetch('/api/auth', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ unlockCode: code })
-            });
-            const data = await res.json();
-            document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
+    console.log("1. Sending password to server:", code); // Debugging tracker
 
-            if (data.authenticated) {
-                currentAuthToken = code; // Save token for future server requests
-                hideAll();
-                document.getElementById('logoutBar').style.display = 'flex';
+    try {
+        const res = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ unlockCode: code })
+        });
+        
+        console.log("2. Server HTTP Status Code:", res.status); // Should be 200
 
-                if (data.role === 'ADMIN') {
-                    document.getElementById('adminSection').classList.add('active-section');
-                    document.getElementById('dashboardTitle').innerText = "Administrator Control Panel";
-                    loadLiveAdminData();
-                } else {
-                    const secId = data.role === 'AMB' ? 'ambassadorSection' : 'organizationSection';
-                    const prefix = data.role === 'AMB' ? 'amb' : 'org';
-                    document.getElementById(secId).classList.add('active-section');
-                    document.getElementById('dashboardTitle').innerText = `${data.role === 'AMB' ? 'Ambassador' : 'Organization'} Portal: ${data.partner.name}`;
-                    document.getElementById(`${prefix}MyCode`).innerText = data.partner.refCode;
-                    loadLivePartnerData();
-                }
+        const data = await res.json();
+        console.log("3. Server Response Data:", data); // Shows exact success/fail message
+
+        document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
+
+        if (data.authenticated) {
+            currentAuthToken = code; 
+            hideAll();
+            document.getElementById('logoutBar').style.display = 'flex';
+
+            if (data.role === 'ADMIN') {
+                document.getElementById('adminSection').classList.add('active-section');
+                document.getElementById('dashboardTitle').innerText = "Administrator Control Panel";
+                loadLiveAdminData();
             } else {
-                errorMsg.innerText = data.message || "Authentication Failed.";
-                errorMsg.style.display = 'block';
+                const secId = data.role === 'AMB' ? 'ambassadorSection' : 'organizationSection';
+                const prefix = data.role === 'AMB' ? 'amb' : 'org';
+                document.getElementById(secId).classList.add('active-section');
+                document.getElementById('dashboardTitle').innerText = `${data.role === 'AMB' ? 'Ambassador' : 'Organization'} Portal: ${data.partner.name}`;
+                document.getElementById(`${prefix}MyCode`).innerText = data.partner.refCode;
+                loadLivePartnerData();
             }
-        } catch (err) {
-            errorMsg.innerText = "Server connection error.";
+        } else {
+            // Displays the specific error message sent from the backend
+            errorMsg.innerText = data.message || "Authentication Failed.";
             errorMsg.style.display = 'block';
-            document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
         }
+    } catch (err) {
+        console.error("Critical Fetch Error:", err);
+        errorMsg.innerText = "Server connection error.";
+        errorMsg.style.display = 'block';
+        document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
     }
+}
 
     // 6. Admin Engine: Fetch and Render
     async function loadLiveAdminData() {
