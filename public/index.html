@@ -829,7 +829,29 @@
                 loadLiveAdminData();
             } catch (e) { console.error(e); }
         }
+        async function deletePartner(refCode) {
+        if (!confirm(`Are you sure you want to delete partner ${refCode}? This action cannot be undone.`)) return;
 
+        try {
+            const res = await fetch('/api/admin/delete-partner', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': currentAuthToken 
+                },
+                body: JSON.stringify({ refCode })
+            });
+            
+            if (res.ok) {
+                loadLiveAdminData(); // Instantly refreshes the dashboard table
+            } else {
+                alert("Failed to delete partner. Unauthorized or server error.");
+            }
+        } catch(e) { 
+            console.error("Delete error:", e); 
+            alert("Error connecting to server.");
+        }
+    }
         async function generatePartner(type) {
             let nameField = type === 'AMB' ? 'ambName' : 'orgName';
             let resultField = type === 'AMB' ? 'ambResult' : 'orgResult';
