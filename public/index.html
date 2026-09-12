@@ -691,7 +691,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                if (res.ok) window.location.href = "https://superprofile.bio/e/6SmoPUDv?checkout=true";
+                if (res.ok) window.location.href = "https://superprofile.bio/e/6SmoPUDv";
                 else {
                     const data = await res.json();
                     alert(data.message || "Registration failed. Please try again.");
