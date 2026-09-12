@@ -23,7 +23,16 @@ const PARTNERS_FILE = path.join(DATA_DIR, 'partners.json');
 if (!fs.existsSync(REGS_FILE)) fs.writeFileSync(REGS_FILE, '[]');
 if (!fs.existsSync(PARTNERS_FILE)) fs.writeFileSync(PARTNERS_FILE, '[]');
 
-const readData = (file) => JSON.parse(fs.readFileSync(file, 'utf8'));
+const readData = (file) => {
+    try {
+        const fileContent = fs.readFileSync(file, 'utf8');
+        if (!fileContent || fileContent.trim() === "") return [];
+        return JSON.parse(fileContent);
+    } catch (error) {
+        console.error(`Error reading or parsing ${file}:`, error);
+        return [];
+    }
+};
 const writeData = (file, data) => fs.writeFileSync(file, JSON.stringify(data, null, 2));
 
 // 1. Get current registration price status (Early Bird check)
