@@ -6,8 +6,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Read the Admin Key securely from Render Environment Variables
-const ADMIN_SECRET_KEY = process.env.ADMIN_KEY || "DEFAULT_ADMIN_KEY_123";
+const ADMIN_SECRET_KEY = process.env.ADMIN_KEY;
 
 app.use(cors());
 app.use(express.json());
