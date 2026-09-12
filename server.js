@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Reads the Admin Key securely from Render Environment Variables
 const ADMIN_SECRET_KEY = process.env.ADMIN_KEY;
 
 app.use(cors());
@@ -22,6 +23,7 @@ const PARTNERS_FILE = path.join(DATA_DIR, 'partners.json');
 if (!fs.existsSync(REGS_FILE)) fs.writeFileSync(REGS_FILE, '[]');
 if (!fs.existsSync(PARTNERS_FILE)) fs.writeFileSync(PARTNERS_FILE, '[]');
 
+// Crash-proof JSON reader
 const readData = (file) => {
     try {
         const fileContent = fs.readFileSync(file, 'utf8');
@@ -32,6 +34,7 @@ const readData = (file) => {
         return [];
     }
 };
+
 const writeData = (file, data) => fs.writeFileSync(file, JSON.stringify(data, null, 2));
 
 // 1. Get current registration price status (Early Bird check)
@@ -55,7 +58,7 @@ app.post('/api/validate-code', (req, res) => {
     }
     res.json({
         valid: true,
-        type: partner.type, // 'AMB' (10% off) or 'ORG' (no student discount)
+        type: partner.type,
         discountPercent: partner.type === 'AMB' ? 10 : 0
     });
 });
@@ -88,7 +91,7 @@ app.post('/api/register', (req, res) => {
     res.json({ success: true, entry: newEntry });
 });
 
-// 4. Secure Authentication (Checks Render Env Variable for Admin, or Partner keys)
+// 4. Secure Authentication 
 app.post('/api/auth', (req, res) => {
     const { unlockCode } = req.body;
     const inputCode = (unlockCode || '').trim();
@@ -117,7 +120,6 @@ app.get('/api/admin/data', (req, res) => {
     const regs = readData(REGS_FILE);
     const partners = readData(PARTNERS_FILE);
 
-    // Calculate payouts
     const settlements = partners.map(p => {
         const partnerRegs = regs.filter(r => r.codeUsed === p.refCode);
         const successful = partnerRegs.filter(r => r.status === 'Successful');

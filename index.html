@@ -5,16 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1st Basant Kumar Jaggi Mediation Competition</title>
     
-    <!-- Premium Font Pairings -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* 
-         * Core Theme Variables 
-         * Establishes the exact color palette from the competition flyer
-         */
         :root {
             --primary-navy: #0B1C3F;
             --secondary-navy: #1A365D;
@@ -34,7 +29,6 @@
             --transition: all 0.3s ease;
         }
 
-        /* Base Structural Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             background-color: var(--bg-body); 
@@ -44,10 +38,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 
-         * Navigation & Header Layout 
-         * Utilizes Flexbox for responsive spacing 
-         */
         .header-bar { 
             background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
             padding: 1.5rem 5%; 
@@ -66,7 +56,6 @@
 
         .main-container { max-width: 1100px; margin: 3rem auto; padding: 0 20px; }
 
-        /* Premium Form Card UI */
         .card { 
             background: var(--surface-white); 
             border-radius: var(--radius-lg); 
@@ -98,10 +87,6 @@
             font-weight: 500;
         }
         
-        /* 
-         * Input Layout Properties
-         * Stacked Flex direction for clean label-to-input alignment 
-         */
         .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; }
         .form-group label { 
             margin-bottom: 0.5rem; 
@@ -122,7 +107,6 @@
         }
         .form-group input::placeholder { color: #A0AEC0; }
         
-        /* Interactive States for Form Elements */
         .form-group input:focus, .form-group select:focus { 
             outline: none; 
             border-color: var(--accent-gold); 
@@ -162,10 +146,6 @@
             background: linear-gradient(135deg, var(--secondary-navy) 0%, var(--primary-navy) 100%);
         }
 
-        /* 
-         * Dashboard Structural Logic 
-         * CSS Grid ensures scalable rows across desktop and mobile screens
-         */
         .dashboard-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
@@ -197,7 +177,6 @@
             border: 1px solid var(--border-color); 
         }
         
-        /* Tabular Data UI */
         .data-table-container { 
             margin-top: 2rem; 
             background: var(--surface-white); 
@@ -257,7 +236,6 @@
         }
         .logout-bar button:hover { background: var(--danger-red); color: white; }
 
-        /* Responsive Breakpoints */
         @media (max-width: 768px) { 
             .card { padding: 2rem 1.5rem; } 
             .form-header h1 { font-size: 1.8rem; }
@@ -279,7 +257,6 @@
             <button onclick="logout()">Secure Logout</button>
         </div>
 
-        <!-- 1. PUBLIC REGISTRATION PAGE -->
         <section id="registrationSection" class="view-section active-section card">
             <div class="form-header">
                 <h1>1st Basant Kumar Jaggi <br>Mediation Competition</h1>
@@ -287,7 +264,6 @@
                 <div class="sub-text">Build Skills. Resolve Disputes. Create Impact.</div>
             </div>
             
-            <!-- Strict HTML5 Form Validation -->
             <form id="studentForm" onsubmit="processRegistration(event)">
                 <div class="form-group">
                     <label>Full Name<span class="req-mark">*</span></label>
@@ -330,7 +306,6 @@
             </form>
         </section>
 
-        <!-- 2. PARTNER SECURE LOGIN -->
         <section id="loginSection" class="view-section card">
             <div class="form-header">
                 <h1>Secure System Access</h1>
@@ -343,7 +318,6 @@
             <button class="btn-submit" onclick="verifyUnlockCode()">Authenticate</button>
         </section>
 
-        <!-- 3. ADMIN DASHBOARD -->
         <section id="adminSection" class="view-section">
             <div class="dashboard-grid active-grid">
                 <div class="stat-card"><h3>Total Registrations</h3><div class="value" id="admTotalRegs">0</div></div>
@@ -383,7 +357,6 @@
             </div>
         </section>
 
-        <!-- 4. AMBASSADOR DASHBOARD -->
         <section id="ambassadorSection" class="view-section">
             <div class="dashboard-grid active-grid">
                 <div class="stat-card"><h3>Public Referral Code</h3><div class="value" id="ambMyCode" style="font-size: 1.6rem;"></div></div>
@@ -400,7 +373,6 @@
             </div>
         </section>
 
-        <!-- 5. ORGANIZATION DASHBOARD -->
         <section id="organizationSection" class="view-section">
             <div class="dashboard-grid active-grid">
                 <div class="stat-card"><h3>Public Referral Code</h3><div class="value" id="orgMyCode" style="font-size: 1.6rem;"></div></div>
@@ -425,13 +397,10 @@
         <a onclick="showLogin()">System Access Portal</a>
     </div>
 
-    <!-- Interface Logic & Data Binding Engine -->
     <script>
-    // Stores the current user's secure token (Admin Key or Partner Key)
     let currentAuthToken = "";
     let currentBasePrice = 1000;
 
-    // 1. Initial Load: Get Dynamic Pricing from Server
     async function fetchStatus() {
         try {
             const res = await fetch('/api/status');
@@ -444,7 +413,6 @@
     }
     window.onload = fetchStatus;
 
-    // 2. Real-Time Discount Validation
     async function applyDiscount() {
         let code = document.getElementById('regCode').value.toUpperCase().trim();
         let msg = document.getElementById('discountText');
@@ -479,7 +447,6 @@
         } catch(e) { console.error(e); }
     }
 
-    // 3. Submit Registration to Live Database
     async function processRegistration(e) {
         e.preventDefault();
         const btn = document.querySelector('.btn-submit');
@@ -502,7 +469,13 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            if (res.ok) window.location.href = "https://superprofile.bio/e/6SmoPUDv";
+            if (res.ok) window.location.href = "https://superprofile.bio/e/6SmoPUDv?checkout=true";
+            else {
+                const data = await res.json();
+                alert(data.message || "Registration failed. Please try again.");
+                btn.innerText = "Proceed to Secure Payment";
+                btn.disabled = false;
+            }
         } catch (err) {
             alert("Error connecting to server. Please try again.");
             btn.innerText = "Proceed to Secure Payment";
@@ -510,7 +483,6 @@
         }
     }
 
-    // 4. Interface View Routing
     function hideAll() {
         document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-section'));
         document.getElementById('loginError').style.display = 'none';
@@ -518,60 +490,57 @@
     function showLogin() { hideAll(); document.getElementById('loginSection').classList.add('active-section'); document.getElementById('logoutBar').style.display = 'none'; }
     function logout() { currentAuthToken = ""; hideAll(); document.getElementById('unlockCode').value = ""; document.getElementById('registrationSection').classList.add('active-section'); document.getElementById('logoutBar').style.display = 'none'; fetchStatus(); }
 
-    // 5. Secure Authentication against Render Environment Variable
-   async function verifyUnlockCode() {
-    const code = document.getElementById('unlockCode').value.trim();
-    const errorMsg = document.getElementById('loginError');
-    errorMsg.style.display = 'none';
-    document.querySelector('#loginSection .btn-submit').innerText = "Authenticating...";
+    async function verifyUnlockCode() {
+        const code = document.getElementById('unlockCode').value.trim();
+        const errorMsg = document.getElementById('loginError');
+        errorMsg.style.display = 'none';
+        document.querySelector('#loginSection .btn-submit').innerText = "Authenticating...";
 
-    console.log("1. Sending password to server:", code); // Debugging tracker
+        console.log("1. Sending password to server:", code); 
 
-    try {
-        const res = await fetch('/api/auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ unlockCode: code })
-        });
-        
-        console.log("2. Server HTTP Status Code:", res.status); // Should be 200
+        try {
+            const res = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ unlockCode: code })
+            });
+            
+            console.log("2. Server HTTP Status Code:", res.status); 
 
-        const data = await res.json();
-        console.log("3. Server Response Data:", data); // Shows exact success/fail message
+            const data = await res.json();
+            console.log("3. Server Response Data:", data); 
 
-        document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
+            document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
 
-        if (data.authenticated) {
-            currentAuthToken = code; 
-            hideAll();
-            document.getElementById('logoutBar').style.display = 'flex';
+            if (data.authenticated) {
+                currentAuthToken = code; 
+                hideAll();
+                document.getElementById('logoutBar').style.display = 'flex';
 
-            if (data.role === 'ADMIN') {
-                document.getElementById('adminSection').classList.add('active-section');
-                document.getElementById('dashboardTitle').innerText = "Administrator Control Panel";
-                loadLiveAdminData();
+                if (data.role === 'ADMIN') {
+                    document.getElementById('adminSection').classList.add('active-section');
+                    document.getElementById('dashboardTitle').innerText = "Administrator Control Panel";
+                    loadLiveAdminData();
+                } else {
+                    const secId = data.role === 'AMB' ? 'ambassadorSection' : 'organizationSection';
+                    const prefix = data.role === 'AMB' ? 'amb' : 'org';
+                    document.getElementById(secId).classList.add('active-section');
+                    document.getElementById('dashboardTitle').innerText = `${data.role === 'AMB' ? 'Ambassador' : 'Organization'} Portal: ${data.partner.name}`;
+                    document.getElementById(`${prefix}MyCode`).innerText = data.partner.refCode;
+                    loadLivePartnerData();
+                }
             } else {
-                const secId = data.role === 'AMB' ? 'ambassadorSection' : 'organizationSection';
-                const prefix = data.role === 'AMB' ? 'amb' : 'org';
-                document.getElementById(secId).classList.add('active-section');
-                document.getElementById('dashboardTitle').innerText = `${data.role === 'AMB' ? 'Ambassador' : 'Organization'} Portal: ${data.partner.name}`;
-                document.getElementById(`${prefix}MyCode`).innerText = data.partner.refCode;
-                loadLivePartnerData();
+                errorMsg.innerText = data.message || "Authentication Failed.";
+                errorMsg.style.display = 'block';
             }
-        } else {
-            // Displays the specific error message sent from the backend
-            errorMsg.innerText = data.message || "Authentication Failed.";
+        } catch (err) {
+            console.error("Critical Fetch Error:", err);
+            errorMsg.innerText = "Server connection error.";
             errorMsg.style.display = 'block';
+            document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
         }
-    } catch (err) {
-        console.error("Critical Fetch Error:", err);
-        errorMsg.innerText = "Server connection error.";
-        errorMsg.style.display = 'block';
-        document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
     }
-}
 
-    // 6. Admin Engine: Fetch and Render
     async function loadLiveAdminData() {
         try {
             const res = await fetch('/api/admin/data', { headers: { 'Authorization': currentAuthToken } });
@@ -660,7 +629,6 @@
         } catch(e) { console.error(e); }
     }
 
-    // 7. Partner Engine: Fetch and Render
     async function loadLivePartnerData() {
         try {
             const res = await fetch('/api/partner/data', {
@@ -696,6 +664,6 @@
             }
         } catch(e) { console.error(e); }
     }
-</script>
+    </script>
 </body>
 </html>
