@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1st Basant Kumar Jaggi Mediation Competition</title>
+    
+    <!-- Premium Font Pairings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 
+         * Core Theme Variables 
+         * Establishes the exact color palette from the competition flyer
+         */
+        :root {
+            --primary-navy: #0B1C3F;
+            --secondary-navy: #1A365D;
+            --accent-gold: #D4AF37;
+            --gold-light: #F9F1D8;
+            --bg-body: #F4F7F6;
+            --surface-white: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --border-color: #E2E8F0;
+            --danger-red: #E53E3E;
+            --success-green: #2F855A;
+            --radius-lg: 12px;
+            --radius-sm: 6px;
+            --shadow-soft: 0 10px 25px rgba(11, 28, 63, 0.05);
+            --shadow-hover: 0 15px 35px rgba(11, 28, 63, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Structural Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            font-family: 'Montserrat', sans-serif; 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 
+         * Navigation & Header Layout 
+         * Utilizes Flexbox for responsive spacing 
+         */
+        .header-bar { 
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
+            padding: 1.5rem 5%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--accent-gold);
+        }
+        .header-bar h2 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 1.5rem; 
+            color: var(--surface-white); 
+            letter-spacing: 0.5px;
+        }
+
+        .main-container { max-width: 1100px; margin: 3rem auto; padding: 0 20px; }
+
+        /* Premium Form Card UI */
+        .card { 
+            background: var(--surface-white); 
+            border-radius: var(--radius-lg); 
+            padding: 3rem; 
+            box-shadow: var(--shadow-soft); 
+            max-width: 650px; 
+            margin: 0 auto; 
+            border-top: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .form-header { text-align: center; margin-bottom: 2.5rem; }
+        .form-header h1 { 
+            font-family: 'Playfair Display', serif; 
+            color: var(--primary-navy); 
+            font-size: 2.2rem; 
+            line-height: 1.2; 
+            margin-bottom: 0.8rem; 
+        }
+        .form-header p { 
+            color: var(--accent-gold); 
+            font-weight: 600; 
+            font-size: 1.1rem; 
+            letter-spacing: 0.5px;
+        }
+        .form-header .sub-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+        
+        /* 
+         * Input Layout Properties
+         * Stacked Flex direction for clean label-to-input alignment 
+         */
+        .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; }
+        .form-group label { 
+            margin-bottom: 0.5rem; 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            color: var(--primary-navy);
+        }
+        .req-mark { color: var(--danger-red); margin-left: 4px; font-weight: bold; }
+        
+        .form-group input, .form-group select { 
+            padding: 0.85rem 1rem; 
+            border: 1.5px solid var(--border-color); 
+            border-radius: var(--radius-sm); 
+            font-size: 0.95rem; 
+            font-family: 'Montserrat', sans-serif;
+            background-color: #FAFCFF;
+            transition: var(--transition);
+        }
+        .form-group input::placeholder { color: #A0AEC0; }
+        
+        /* Interactive States for Form Elements */
+        .form-group input:focus, .form-group select:focus { 
+            outline: none; 
+            border-color: var(--accent-gold); 
+            background-color: var(--surface-white);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15); 
+        }
+        
+        .price-box { 
+            background: var(--gold-light); 
+            padding: 1.2rem; 
+            text-align: center; 
+            border-radius: var(--radius-sm); 
+            font-size: 1.3rem; 
+            font-weight: 600; 
+            margin: 2rem 0; 
+            color: var(--primary-navy); 
+            border: 1px dashed var(--accent-gold);
+        }
+
+        .btn-submit { 
+            width: 100%; 
+            padding: 1rem; 
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%); 
+            color: var(--surface-white); 
+            border: none; 
+            border-radius: var(--radius-sm); 
+            font-size: 1.05rem; 
+            font-weight: 600; 
+            letter-spacing: 0.5px;
+            cursor: pointer; 
+            transition: var(--transition); 
+            box-shadow: 0 4px 6px rgba(11, 28, 63, 0.2);
+        }
+        .btn-submit:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 12px rgba(11, 28, 63, 0.3); 
+            background: linear-gradient(135deg, var(--secondary-navy) 0%, var(--primary-navy) 100%);
+        }
+
+        /* 
+         * Dashboard Structural Logic 
+         * CSS Grid ensures scalable rows across desktop and mobile screens
+         */
+        .dashboard-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 2rem; 
+        }
+        .stat-card { 
+            background: var(--surface-white); 
+            padding: 1.8rem; 
+            border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-soft); 
+            border-bottom: 4px solid var(--accent-gold); 
+            transition: var(--transition);
+        }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+        .stat-card h3 { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--primary-navy); font-family: 'Playfair Display', serif; }
+
+        .admin-forms-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 2rem; 
+        }
+        .admin-form-card { 
+            background: var(--surface-white); 
+            padding: 2rem; 
+            border-radius: var(--radius-lg); 
+            border: 1px solid var(--border-color); 
+        }
+        
+        /* Tabular Data UI */
+        .data-table-container { 
+            margin-top: 2rem; 
+            background: var(--surface-white); 
+            padding: 2rem; 
+            border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-soft); 
+            overflow-x: auto; 
+        }
+        .data-table-container h3 { font-family: 'Playfair Display', serif; color: var(--primary-navy); margin-bottom: 1.5rem; font-size: 1.4rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+        th { background: #F7FAFC; color: var(--primary-navy); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;}
+        tr:hover { background-color: #FAFCFF; }
+        
+        .status-badge { 
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            display: inline-block; 
+            text-align: center; 
+            text-transform: uppercase;
+        }
+        .status-Pending { background: #FEFCBF; color: #744210; }
+        .status-Successful { background: #C6F6D5; color: #22543D; }
+        .status-Rejected { background: #FED7D7; color: #822727; }
+
+        .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .active-section { display: block; }
+        .active-grid { display: grid; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .footer { text-align: center; margin-top: 4rem; padding: 2rem; color: var(--text-muted); font-size: 0.9rem; }
+        .footer a { color: var(--text-muted); text-decoration: none; cursor: pointer; transition: var(--transition); font-weight: 500;}
+        .footer a:hover { color: var(--accent-gold); }
+
+        .logout-bar { 
+            display: none; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 2rem; 
+            background: var(--surface-white); 
+            padding: 1.2rem 2rem; 
+            border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-soft);
+        }
+        .logout-bar button { 
+            background: #FFF5F5; 
+            color: var(--danger-red); 
+            border: 1px solid #FEB2B2; 
+            padding: 0.6rem 1.2rem; 
+            border-radius: var(--radius-sm); 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: var(--transition);
+        }
+        .logout-bar button:hover { background: var(--danger-red); color: white; }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) { 
+            .card { padding: 2rem 1.5rem; } 
+            .form-header h1 { font-size: 1.8rem; }
+            .header-bar h2 { font-size: 1.2rem; }
+            .logout-bar { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <h2>ALL INDIA LAW STUDENTS FORUM</h2>
+    </div>
+
+    <div class="main-container">
+
+        <div id="logoutBar" class="logout-bar">
+            <span id="dashboardTitle" style="font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--primary-navy);">Dashboard</span>
+            <button onclick="logout()">Secure Logout</button>
+        </div>
+
+        <!-- 1. PUBLIC REGISTRATION PAGE -->
+        <section id="registrationSection" class="view-section active-section card">
+            <div class="form-header">
+                <h1>1st Basant Kumar Jaggi <br>Mediation Competition</h1>
+                <p>10th & 11th October | Prizes Worth 25K</p>
+                <div class="sub-text">Build Skills. Resolve Disputes. Create Impact.</div>
+            </div>
+            
+            <!-- Strict HTML5 Form Validation -->
+            <form id="studentForm" onsubmit="processRegistration(event)">
+                <div class="form-group">
+                    <label>Full Name<span class="req-mark">*</span></label>
+                    <input type="text" id="regName" required placeholder="e.g., Rahul Sharma">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number<span class="req-mark">*</span></label>
+                    <input type="tel" id="regPhone" required pattern="[0-9]{10}" placeholder="e.g., 9876543210 (10-digit WhatsApp)">
+                </div>
+
+                <div class="form-group">
+                    <label>Email ID<span class="req-mark">*</span></label>
+                    <input type="email" id="regEmail" required placeholder="e.g., rahul.sharma@nlu.edu.in">
+                </div>
+
+                <div class="form-group">
+                    <label>Name of Your College<span class="req-mark">*</span></label>
+                    <input type="text" id="regCollege" required placeholder="e.g., Campus Law Centre, Delhi University">
+                </div>
+
+                <div class="form-group">
+                    <label>Ticket Type<span class="req-mark">*</span></label>
+                    <select id="regTicket" required>
+                        <option value="" disabled selected>Select an option...</option>
+                        <option value="Institutional">Institutional Registration</option>
+                        <option value="CrossTeam">Cross Team Registration</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Referral Code (Optional)</label>
+                    <input type="text" id="regCode" onkeyup="applyDiscount()" placeholder="Enter Ambassador or Org code (leave blank if none)">
+                    <small id="discountText" style="color: var(--success-green); margin-top: 5px; display: none; font-weight: 600;"></small>
+                </div>
+
+                <div class="price-box">Total Payable: ₹<span id="priceValue">700</span></div>
+                
+                <button type="submit" class="btn-submit">Proceed to Secure Payment</button>
+            </form>
+        </section>
+
+        <!-- 2. PARTNER SECURE LOGIN -->
+        <section id="loginSection" class="view-section card">
+            <div class="form-header">
+                <h1>Secure System Access</h1>
+                <p style="color: var(--text-muted); font-weight: 500;">Enter your Administrator or Partner Access Code</p>
+            </div>
+            <div class="form-group">
+                <input type="password" id="unlockCode" placeholder="Enter Access Code" style="text-align: center; letter-spacing: 2px;">
+            </div>
+            <p id="loginError" style="color: var(--danger-red); display: none; text-align: center; margin-bottom: 15px; font-weight: 600;">Authentication Failed.</p>
+            <button class="btn-submit" onclick="verifyUnlockCode()">Authenticate</button>
+        </section>
+
+        <!-- 3. ADMIN DASHBOARD -->
+        <section id="adminSection" class="view-section">
+            <div class="dashboard-grid active-grid">
+                <div class="stat-card"><h3>Total Registrations</h3><div class="value" id="admTotalRegs">0</div></div>
+                <div class="stat-card"><h3>Verified Revenue</h3><div class="value" id="admTotalRev" style="color: var(--success-green);">₹0</div></div>
+                <div class="stat-card"><h3>Early Bird Phase</h3><div class="value" id="admEarlyBird" style="font-size: 1.5rem;">Active</div></div>
+            </div>
+
+            <div class="admin-forms-grid">
+                <div class="admin-form-card">
+                    <h3 style="color: var(--primary-navy); margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Register Ambassador</h3>
+                    <div class="form-group"><input type="text" id="ambName" placeholder="Ambassador Name"></div>
+                    <button class="btn-submit" onclick="generatePartner('AMB')">Generate Secure Codes</button>
+                    <div id="ambResult" style="margin-top: 15px; font-size: 0.9rem; background: var(--bg-body); padding: 15px; display: none; border-radius: var(--radius-sm); border: 1px dashed var(--accent-gold);"></div>
+                </div>
+                <div class="admin-form-card">
+                    <h3 style="color: var(--primary-navy); margin-bottom: 1rem; font-family: 'Playfair Display', serif;">Register Organization</h3>
+                    <div class="form-group"><input type="text" id="orgName" placeholder="Organization Name"></div>
+                    <button class="btn-submit" onclick="generatePartner('ORG')">Generate Secure Codes</button>
+                    <div id="orgResult" style="margin-top: 15px; font-size: 0.9rem; background: var(--bg-body); padding: 15px; display: none; border-radius: var(--radius-sm); border: 1px dashed var(--accent-gold);"></div>
+                </div>
+            </div>
+
+            <div class="data-table-container">
+                <h3>Registration Verification Control</h3>
+                <table>
+                    <thead><tr><th>Name</th><th>College</th><th>Amount</th><th>Code Used</th><th>Payment Status</th></tr></thead>
+                    <tbody id="admRegTableBody"></tbody>
+                </table>
+            </div>
+            
+            <div class="data-table-container">
+                <h3>Partner Financial Settlements (Verified Only)</h3>
+                <table>
+                    <thead><tr><th>Partner Name</th><th>Role</th><th>Total Referrals</th><th>Verified Successes</th><th>Payout Owed</th></tr></thead>
+                    <tbody id="admPartnerTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 4. AMBASSADOR DASHBOARD -->
+        <section id="ambassadorSection" class="view-section">
+            <div class="dashboard-grid active-grid">
+                <div class="stat-card"><h3>Public Referral Code</h3><div class="value" id="ambMyCode" style="font-size: 1.6rem;"></div></div>
+                <div class="stat-card"><h3>Total Uses</h3><div class="value" id="ambRefs">0</div></div>
+                <div class="stat-card"><h3>Verified Earnings</h3><div class="value" id="ambEarns" style="color: var(--success-green);">₹0</div></div>
+            </div>
+            
+            <div class="data-table-container">
+                <h3>Your Referral Tracking</h3>
+                <table>
+                    <thead><tr><th>Student Name</th><th>Ticket Type</th><th>Amount Paid</th><th>Payment Status</th></tr></thead>
+                    <tbody id="ambTrackingTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. ORGANIZATION DASHBOARD -->
+        <section id="organizationSection" class="view-section">
+            <div class="dashboard-grid active-grid">
+                <div class="stat-card"><h3>Public Referral Code</h3><div class="value" id="orgMyCode" style="font-size: 1.6rem;"></div></div>
+                <div class="stat-card"><h3>Verified Successes</h3><div class="value" id="orgSuccess">0</div></div>
+                <div class="stat-card"><h3>Verified Earnings (30%)</h3><div class="value" id="orgEarns" style="color: var(--success-green);">₹0</div></div>
+            </div>
+            
+            <div class="data-table-container">
+                <h3>Your Referral Tracking</h3>
+                <table>
+                    <thead><tr><th>Student Name</th><th>Ticket Type</th><th>Amount Paid</th><th>Payment Status</th></tr></thead>
+                    <tbody id="orgTrackingTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="footer">
+        <strong>Helpdesk:</strong> 7828143347 | ailsf.official1@gmail.com<br>
+        All India Law Students Forum &copy; 2026<br><br>
+        <a onclick="showLogin()">System Access Portal</a>
+    </div>
+
+    <!-- Interface Logic & Data Binding Engine -->
+    <script>
+    // Stores the current user's secure token (Admin Key or Partner Key)
+    let currentAuthToken = "";
+    let currentBasePrice = 1000;
+
+    // 1. Initial Load: Get Dynamic Pricing from Server
+    async function fetchStatus() {
+        try {
+            const res = await fetch('/api/status');
+            if(res.ok) {
+                const data = await res.json();
+                currentBasePrice = data.basePrice;
+                document.getElementById('priceValue').innerText = currentBasePrice;
+            }
+        } catch(e) { console.error("Could not fetch status from server"); }
+    }
+    window.onload = fetchStatus;
+
+    // 2. Real-Time Discount Validation
+    async function applyDiscount() {
+        let code = document.getElementById('regCode').value.toUpperCase().trim();
+        let msg = document.getElementById('discountText');
+        let price = currentBasePrice;
+
+        if(!code) {
+            msg.style.display = "none";
+            document.getElementById('priceValue').innerText = price;
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/validate-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code })
+            });
+            const data = await res.json();
+
+            if (data.valid) {
+                msg.style.display = "block";
+                if (data.type === 'AMB') {
+                    price = price - (price * 0.10);
+                    msg.innerText = "Student Discount: 10% Applied!";
+                } else {
+                    msg.innerText = "Organization Code Applied.";
+                }
+            } else {
+                msg.style.display = "none";
+            }
+            document.getElementById('priceValue').innerText = price;
+        } catch(e) { console.error(e); }
+    }
+
+    // 3. Submit Registration to Live Database
+    async function processRegistration(e) {
+        e.preventDefault();
+        const btn = document.querySelector('.btn-submit');
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        const payload = {
+            name: document.getElementById('regName').value.trim(),
+            phone: document.getElementById('regPhone').value.trim(),
+            email: document.getElementById('regEmail').value.trim(),
+            college: document.getElementById('regCollege').value.trim(),
+            ticket: document.getElementById('regTicket').value,
+            codeUsed: document.getElementById('regCode').value.toUpperCase().trim(),
+            amountPaid: parseInt(document.getElementById('priceValue').innerText)
+        };
+
+        try {
+            const res = await fetch('/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (res.ok) window.location.href = "https://superprofile.bio/e/6SmoPUDv";
+        } catch (err) {
+            alert("Error connecting to server. Please try again.");
+            btn.innerText = "Proceed to Secure Payment";
+            btn.disabled = false;
+        }
+    }
+
+    // 4. Interface View Routing
+    function hideAll() {
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active-section'));
+        document.getElementById('loginError').style.display = 'none';
+    }
+    function showLogin() { hideAll(); document.getElementById('loginSection').classList.add('active-section'); document.getElementById('logoutBar').style.display = 'none'; }
+    function logout() { currentAuthToken = ""; hideAll(); document.getElementById('unlockCode').value = ""; document.getElementById('registrationSection').classList.add('active-section'); document.getElementById('logoutBar').style.display = 'none'; fetchStatus(); }
+
+    // 5. Secure Authentication against Render Environment Variable
+    async function verifyUnlockCode() {
+        const code = document.getElementById('unlockCode').value.trim();
+        const errorMsg = document.getElementById('loginError');
+        errorMsg.style.display = 'none';
+        document.querySelector('#loginSection .btn-submit').innerText = "Authenticating...";
+
+        try {
+            const res = await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ unlockCode: code })
+            });
+            const data = await res.json();
+            document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
+
+            if (data.authenticated) {
+                currentAuthToken = code; // Save token for future server requests
+                hideAll();
+                document.getElementById('logoutBar').style.display = 'flex';
+
+                if (data.role === 'ADMIN') {
+                    document.getElementById('adminSection').classList.add('active-section');
+                    document.getElementById('dashboardTitle').innerText = "Administrator Control Panel";
+                    loadLiveAdminData();
+                } else {
+                    const secId = data.role === 'AMB' ? 'ambassadorSection' : 'organizationSection';
+                    const prefix = data.role === 'AMB' ? 'amb' : 'org';
+                    document.getElementById(secId).classList.add('active-section');
+                    document.getElementById('dashboardTitle').innerText = `${data.role === 'AMB' ? 'Ambassador' : 'Organization'} Portal: ${data.partner.name}`;
+                    document.getElementById(`${prefix}MyCode`).innerText = data.partner.refCode;
+                    loadLivePartnerData();
+                }
+            } else {
+                errorMsg.innerText = data.message || "Authentication Failed.";
+                errorMsg.style.display = 'block';
+            }
+        } catch (err) {
+            errorMsg.innerText = "Server connection error.";
+            errorMsg.style.display = 'block';
+            document.querySelector('#loginSection .btn-submit').innerText = "Authenticate";
+        }
+    }
+
+    // 6. Admin Engine: Fetch and Render
+    async function loadLiveAdminData() {
+        try {
+            const res = await fetch('/api/admin/data', { headers: { 'Authorization': currentAuthToken } });
+            const data = await res.json();
+            if(res.ok) renderAdminDashboard(data.regs, data.settlements);
+        } catch(e) { console.error(e); }
+    }
+
+    function renderAdminDashboard(regs, settlements) {
+        let verifiedRev = regs.filter(r => r.status === "Successful").reduce((sum, r) => sum + r.amountPaid, 0);
+        document.getElementById('admTotalRegs').innerText = regs.length;
+        document.getElementById('admTotalRev').innerText = `₹${verifiedRev}`;
+        
+        const earlyBirdStatus = regs.length < 10 ? `Active (${10 - regs.length} left)` : "Closed";
+        document.getElementById('admEarlyBird').innerText = earlyBirdStatus;
+        document.getElementById('admEarlyBird').style.color = regs.length < 10 ? "var(--success-green)" : "var(--danger-red)";
+
+        let regHTML = "";
+        regs.forEach(r => {
+            const color = r.status === 'Pending' ? '#744210' : (r.status === 'Successful' ? '#22543D' : '#822727');
+            const bgColor = r.status === 'Pending' ? '#FEFCBF' : (r.status === 'Successful' ? '#C6F6D5' : '#FED7D7');
+            regHTML += `
+                <tr>
+                    <td style="font-weight: 600;">${r.name}</td>
+                    <td>${r.college}</td>
+                    <td style="font-weight: 600;">₹${r.amountPaid}</td>
+                    <td><span style="background:#edf2f7; padding:4px 8px; border-radius:4px; font-size:0.8rem;">${r.codeUsed || 'NONE'}</span></td>
+                    <td>
+                        <select style="background-color: ${bgColor}; color: ${color}; border:none; padding:6px 10px; border-radius:4px; font-weight:600; cursor:pointer;" onchange="updateRegStatus('${r.id}', this.value)">
+                            <option value="Pending" ${r.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Successful" ${r.status === 'Successful' ? 'selected' : ''}>Successful</option>
+                            <option value="Rejected" ${r.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+                        </select>
+                    </td>
+                </tr>`;
+        });
+        document.getElementById('admRegTableBody').innerHTML = regHTML;
+
+        let partnerHTML = "";
+        settlements.forEach(p => {
+            partnerHTML += `
+                <tr>
+                    <td style="font-weight: 600;">${p.name}</td>
+                    <td><span style="background:#edf2f7; padding:4px 8px; border-radius:4px; font-size:0.8rem;">${p.type === 'AMB' ? 'AMBASSADOR' : 'ORGANIZATION'}</span></td>
+                    <td>${p.totalReferrals}</td>
+                    <td>${p.verifiedSuccess}</td>
+                    <td style="font-weight: 700; color: var(--success-green);">₹${p.payoutOwed}</td>
+                </tr>`;
+        });
+        document.getElementById('admPartnerTableBody').innerHTML = partnerHTML;
+    }
+
+    async function updateRegStatus(id, status) {
+        try {
+            await fetch('/api/admin/update-status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': currentAuthToken },
+                body: JSON.stringify({ id, status })
+            });
+            loadLiveAdminData();
+        } catch(e) { console.error(e); }
+    }
+
+    async function generatePartner(type) {
+        let nameField = type === 'AMB' ? 'ambName' : 'orgName';
+        let resultField = type === 'AMB' ? 'ambResult' : 'orgResult';
+        const name = document.getElementById(nameField).value.trim();
+        if(!name) return alert("Enter a name");
+
+        try {
+            const res = await fetch('/api/admin/create-partner', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': currentAuthToken },
+                body: JSON.stringify({ type, name })
+            });
+            const data = await res.json();
+            
+            if(data.success) {
+                const resultDiv = document.getElementById(resultField);
+                resultDiv.innerHTML = `<strong style="color:var(--primary-navy);">Partner Created Successfully</strong><br><br>
+                                       <b>Public Code:</b> <span style="background:#edf2f7; padding:2px 6px; border-radius:4px;">${data.partner.refCode}</span><br>
+                                       <b>Private Access:</b> <span style="background:#edf2f7; padding:2px 6px; border-radius:4px;">${data.partner.unlockCode}</span>`;
+                resultDiv.style.display = 'block';
+                loadLiveAdminData();
+            }
+        } catch(e) { console.error(e); }
+    }
+
+    // 7. Partner Engine: Fetch and Render
+    async function loadLivePartnerData() {
+        try {
+            const res = await fetch('/api/partner/data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ unlockCode: currentAuthToken })
+            });
+            const data = await res.json();
+            
+            if (res.ok) {
+                const prefix = data.partner.type === 'AMB' ? 'amb' : 'org';
+                
+                if(data.partner.type === 'AMB') {
+                    document.getElementById('ambRefs').innerText = data.referredStudents.length;
+                } else {
+                    document.getElementById('orgSuccess').innerText = data.successfulCount;
+                }
+                
+                document.getElementById(`${prefix}Earns`).innerText = `₹${data.earnings}`;
+
+                let trackingHTML = "";
+                data.referredStudents.forEach(r => {
+                    trackingHTML += `
+                        <tr>
+                            <td style="font-weight: 500;">${r.name}</td>
+                            <td>${r.ticket}</td>
+                            <td style="font-weight: 600;">₹${r.amountPaid}</td>
+                            <td><span class="status-badge status-${r.status}">${r.status}</span></td>
+                        </tr>`;
+                });
+                
+                document.getElementById(`${prefix}TrackingTableBody`).innerHTML = trackingHTML || `<tr><td colspan="4" style="text-align:center; color:#718096;">No student registrations yet.</td></tr>`;
+            }
+        } catch(e) { console.error(e); }
+    }
+</script>
+</body>
+</html>
