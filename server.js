@@ -202,6 +202,26 @@ app.post('/api/partner/data', (req, res) => {
             amountPaid: r.amountPaid,
             status: r.status
         }));
+        // 9. Admin Delete Partner
+app.post('/api/admin/delete-partner', (req, res) => {
+    const authHeader = req.headers['authorization'];
+    if (authHeader !== ADMIN_SECRET_KEY) {
+        return res.status(403).json({ error: "Unauthorized" });
+    }
+
+    const { refCode } = req.body;
+    let partners = readData(PARTNERS_FILE);
+    
+    const initialLength = partners.length;
+    partners = partners.filter(p => p.refCode !== refCode);
+
+    if (partners.length < initialLength) {
+        writeData(PARTNERS_FILE, partners);
+        return res.json({ success: true });
+    }
+
+    res.status(404).json({ error: "Partner not found" });
+});
 
     const successfulCount = referredStudents.filter(r => r.status === 'Successful').length;
     let earnings = 0;
