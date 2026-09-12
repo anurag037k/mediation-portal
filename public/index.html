@@ -772,20 +772,22 @@
         }
 
         function renderAdminDashboard(regs, settlements) {
+        const activeRegs = regs.filter(r => r.status !== 'Rejected');
         let verifiedRev = regs.filter(r => r.status === "Successful").reduce((sum, r) => sum + r.amountPaid, 0);
-        document.getElementById('admTotalRegs').innerText = regs.length;
+        
+        document.getElementById('admTotalRegs').innerText = activeRegs.length;
         document.getElementById('admTotalRev').innerText = `₹${verifiedRev}`;
         
-        const earlyBirdStatus = regs.length < 10 ? `Active (${10 - regs.length} left)` : "Closed";
+        const earlyBirdStatus = activeRegs.length < 10 ? `Active (${10 - activeRegs.length} left)` : "Closed";
         document.getElementById('admEarlyBird').innerText = earlyBirdStatus;
-        document.getElementById('admEarlyBird').style.color = regs.length < 10 ? "var(--success-green)" : "var(--danger-red)";
+        document.getElementById('admEarlyBird').style.color = activeRegs.length < 10 ? "var(--success-green)" : "var(--danger-red)";
 
         let regHTML = "";
         regs.forEach(r => {
             const color = r.status === 'Pending' ? '#744210' : (r.status === 'Successful' ? '#22543D' : '#822727');
             const bgColor = r.status === 'Pending' ? '#FEFCBF' : (r.status === 'Successful' ? '#C6F6D5' : '#FED7D7');
             regHTML += `
-                <tr>
+                <tr ${r.status === 'Rejected' ? 'style="opacity: 0.6;"' : ''}>
                     <td style="font-weight: 600;">${r.name}</td>
                     <td>${r.college}</td>
                     <td style="font-weight: 600;">₹${r.amountPaid}</td>
@@ -817,7 +819,6 @@
         });
         document.getElementById('admPartnerTableBody').innerHTML = partnerHTML;
     }
-
         async function updateRegStatus(id, status) {
             try {
                 await fetch('/api/admin/update-status', {
