@@ -120,30 +120,34 @@ app.get('/api/admin/data', (req, res) => {
     const regs = readData(REGS_FILE);
     const partners = readData(PARTNERS_FILE);
 
+    // Filter out rejected registrations for stats calculations
+    const activeRegs = regs.filter(r => r.status !== 'Rejected');
+    const successfulRegs = regs.filter(r => r.status === 'Successful');
+
     const settlements = partners.map(p => {
-        const partnerRegs = regs.filter(r => r.codeUsed === p.refCode);
-        const successful = partnerRegs.filter(r => r.status === 'Successful');
+        const partnerRegs = regs.filter(r => r.codeUsed === p.refCode && r.status === 'Successful');
 
         let payout = 0;
-        if (p.type === 'AMB' && successful.length >= 1) {
+        if (p.type === 'AMB' && partnerRegs.length >= 1) {
             payout = 100;
         } else if (p.type === 'ORG') {
-            payout = successful.reduce((sum, r) => sum + (r.amountPaid * 0.30), 0);
+            payout = partnerRegs.reduce((sum, r) => sum + (r.amountPaid * 0.30), 0);
         }
+
+        const totalPartnerRefs = regs.filter(r => r.codeUsed === p.refCode && r.status !== 'Rejected').length;
 
         return {
             name: p.name,
             type: p.type,
             refCode: p.refCode,
-            totalReferrals: partnerRegs.length,
-            verifiedSuccess: successful.length,
+            totalReferrals: totalPartnerRefs,
+            verifiedSuccess: partnerRegs.length,
             payoutOwed: payout
         };
     });
 
-    res.json({ regs, settlements });
+    res.json({ regs, settlements, activeCount: activeRegs.length });
 });
-
 // 6. Admin Status Update
 app.post('/api/admin/update-status', (req, res) => {
     const authHeader = req.headers['authorization'];
