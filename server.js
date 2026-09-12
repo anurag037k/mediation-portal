@@ -206,7 +206,7 @@ app.post('/api/partner/data', (req, res) => {
             amountPaid: r.amountPaid,
             status: r.status
         }));
-        // 9. Admin Delete Partner
+       // 9. Admin Delete Partner
 app.post('/api/admin/delete-partner', (req, res) => {
     const authHeader = req.headers['authorization'];
     if (authHeader !== ADMIN_SECRET_KEY) {
