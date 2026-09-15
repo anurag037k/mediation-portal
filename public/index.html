@@ -343,7 +343,7 @@
             <div class="data-table-container">
                 <h3>Registration Verification Control</h3>
                 <table>
-                    <thead><tr><th>Name</th><th>Phone</th><th>College</th><th>Amount</th><th>Code Used</th><th>Payment Status</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>College</th><th>Amount</th><th>Code Used</th><th>Payment Status</th></tr></thead>
                     <tbody id="admRegTableBody"></tbody>
                 </table>
             </div>
@@ -558,6 +558,8 @@
             regHTML += `
                 <tr ${r.status === 'Rejected' ? 'style="opacity: 0.6;"' : ''}>
                     <td style="font-weight: 600;">${r.name}</td>
+                    <td>${r.phone || 'N/A'}</td> 
+                    <td>${r.email || 'N/A'}</td> 
                     <td>${r.college}</td>
                     <td style="font-weight: 600;">₹${r.amountPaid}</td>
                     <td><span style="background:#edf2f7; padding:4px 8px; border-radius:4px; font-size:0.8rem;">${r.codeUsed || 'NONE'}</span></td>
