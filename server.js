@@ -180,7 +180,10 @@ app.post('/api/admin/create-partner', async (req, res) => {
 
         const { type, name } = req.body;
         const randomSuffix = Math.floor(10000 + Math.random() * 90000);
-        const refCode = `${type}-${name.substring(0, 3).toUpperCase()}${randomSuffix}`;
+        
+        // FIX APPLIED HERE: Cleans name to letters only, takes first 3 chars
+        const cleanName = name.replace(/[^a-zA-Z]/g, '').substring(0, 3).toUpperCase() || 'REF';
+        const refCode = `${type}-${cleanName}${randomSuffix}`;
         const unlockCode = `KEY-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
         const newPartner = new Partner({ type, name, refCode, unlockCode });
