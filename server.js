@@ -51,10 +51,10 @@ const Partner = mongoose.model('Partner', partnerSchema);
 app.get('/api/status', async (req, res) => {
     try {
         const activeCount = await Reg.countDocuments({ status: { $ne: 'Rejected' } });
-        const isEarlyBird = activeCount < 10;
+        const isEarlyBird = activeCount < 15;
         res.json({
             basePrice: isEarlyBird ? 700 : 1000,
-            earlyBirdRemaining: Math.max(0, 10 - activeCount)
+            earlyBirdRemaining: Math.max(0, 15 - activeCount)
         });
     } catch (error) {
         res.status(500).json({ error: "Server error" });
