@@ -547,9 +547,9 @@
         document.getElementById('admTotalRegs').innerText = activeRegs.length;
         document.getElementById('admTotalRev').innerText = `₹${verifiedRev}`;
         
-        const earlyBirdStatus = activeRegs.length < 10 ? `Active (${10 - activeRegs.length} left)` : "Closed";
+        const earlyBirdStatus = activeRegs.length < 15 ? `Active (${15 - activeRegs.length} left)` : "Closed";
         document.getElementById('admEarlyBird').innerText = earlyBirdStatus;
-        document.getElementById('admEarlyBird').style.color = activeRegs.length < 10 ? "var(--success-green)" : "var(--danger-red)";
+        document.getElementById('admEarlyBird').style.color = activeRegs.length < 15 ? "var(--success-green)" : "var(--danger-red)";
 
         let regHTML = "";
         regs.forEach(r => {
