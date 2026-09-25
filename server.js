@@ -53,7 +53,7 @@ app.get('/api/status', async (req, res) => {
         const activeCount = await Reg.countDocuments({ status: { $ne: 'Rejected' } });
         const isEarlyBird = activeCount < 15;
         res.json({
-            basePrice: isEarlyBird ? 1000 : 1200,
+            basePrice: isEarlyBird ? 700 : 1000,
             earlyBirdRemaining: Math.max(0, 15 - activeCount)
         });
     } catch (error) {
