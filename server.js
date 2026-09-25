@@ -53,7 +53,7 @@ app.get('/api/status', async (req, res) => {
         const activeCount = await Reg.countDocuments({ status: { $ne: 'Rejected' } });
         const isEarlyBird = activeCount < 15;
         res.json({
-            basePrice: isEarlyBird ? 700 : 1000,
+            basePrice: isEarlyBird ? 1000 : 1200,
             earlyBirdRemaining: Math.max(0, 15 - activeCount)
         });
     } catch (error) {
@@ -61,7 +61,7 @@ app.get('/api/status', async (req, res) => {
     }
 });
 
-// 2. Validate referral codes (Strict 5% for AMB, 0% for ORG)
+// 2. Validate referral codes (Strict 10% for AMB, 0% for ORG)
 app.post('/api/validate-code', async (req, res) => {
     try {
         const { code } = req.body;
@@ -72,7 +72,7 @@ app.post('/api/validate-code', async (req, res) => {
         res.json({
             valid: true,
             type: partner.type,
-            discountPercent: partner.type === 'AMB' ? 5 : 0 
+            discountPercent: partner.type === 'AMB' ? 10 : 0 
         });
     } catch (error) {
         res.status(500).json({ error: "Server error" });
