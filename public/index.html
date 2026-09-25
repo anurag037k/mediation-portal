@@ -300,7 +300,7 @@
                     <small id="discountText" style="margin-top: 5px; display: none; font-weight: 600;"></small>
                 </div>
 
-                <div class="price-box">Total Payable: ₹<span id="priceValue">700</span></div>
+                <div class="price-box">Total Payable: ₹<span id="priceValue">1000</span></div>
                 
                 <button type="submit" class="btn-submit">Proceed to Secure Payment</button>
             </form>
@@ -436,8 +436,8 @@
                 msg.style.display = "block";
                 msg.style.color = "var(--success-green)";
                 if (data.type === 'AMB') {
-                    price = price - (price * 0.05); // 5% Discount
-                    msg.innerText = "Student Discount: 5% Applied!";
+                    price = price - (price * 0.10); // 10% Discount
+                    msg.innerText = "Student Discount: 10% Applied!";
                 } else {
                     msg.innerText = "Organization Code Applied.";
                 }
